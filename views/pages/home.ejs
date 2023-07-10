@@ -1,0 +1,14 @@
+    <%- include('../partials/head.ejs') %>
+</head>
+<body>
+    <%- include('../partials/navigation.ejs') %>
+    <main>
+        <div class="d-flex justify-content-center w-100 p-3">
+            <% if (user) { %>
+                <h1>Hi, there and welcome! I am <%= user.name + " " + user.lastname %>!</h1>
+            <% } else { %>
+                <h1><a href="/auth/signin">Sign In</a></h1>
+            <% } %>
+        </div>
+    </main>
+    <%- include('../partials/end.ejs') %>

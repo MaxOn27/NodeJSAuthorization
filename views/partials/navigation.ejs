@@ -1,0 +1,34 @@
+<header class="main-header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto d-flex align-items-center">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <% if (isAuthenticated) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                <% } %>
+                <% if (!isAuthenticated) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/signin">Sign in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/signup">Sign up</a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <form action="/logout" method="post">
+                            <button type="submit" class="btn bg-transparent nav-link">Logout</button>
+                        </form>
+                    </li>
+                <% } %>
+
+            </ul>
+            <span class="navbar-text">
+                My Website
+            </span>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,41 @@
+<%- include('../../partials/head.ejs') %>
+</head>
+<body>
+<%- include('../../partials/navigation.ejs') %>
+<main>
+    <div class="d-flex justify-content-center flex-column align-items-center w-100 p-3">
+        <% if (errorMessage) { %>
+            <div><%= errorMessage %></div>
+        <% } %>
+        <form class="w-25" action="/createUser" method="post">
+            <div class="form-group d-flex">
+                <input name="name" type="text" class="form-control mr-1" id="exampleInputPassword1" placeholder="Name">
+                <input name="lastname" type="text" class="form-control ml-1" id="exampleInputPassword1"
+                       placeholder="Last name">
+            </div>
+
+            <div class="form-group">
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1"
+                       aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+                       placeholder="Password">
+            </div>
+
+            <div class="form-group">
+                <input name="confirmPassword" type="password" class="form-control" id="exampleInputPassword1"
+                       placeholder="Confirm Password">
+            </div>
+
+            <div class="d-flex justify-content-center w-100">
+                <button type="submit" class="btn btn-primary btn-block mb-4 w-50">Register</button>
+            </div>
+
+            <div class="text-center">
+                <p>Already have an account? <a href="/auth/signin">Sign in</a></p>
+            </div>
+        </form>
+    </div>
+</main>
+<%- include('../../partials/end.ejs') %>
