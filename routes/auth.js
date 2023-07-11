@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userController = require("../controllers/user");
+const {join} = require("path");
 router.get('/auth/signup', function(req, res) {
   let message = req.flash('error');
   if (message.length > 0) {

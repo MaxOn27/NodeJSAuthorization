@@ -2,12 +2,7 @@ const express = require('express');
 const router = express.Router();
 const isAuth = require('../middleware/is-auth');
 
-const user = {
-  firstName: 'Max',
-  lastName: 'Cook',
-}
-
-router.get('/', function (req, res) {
+router.get('/', async function (req, res) {
   res.render('pages/home', {user: req.session.user || undefined });
 });
 
