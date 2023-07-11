@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
+const csrf = require('csurf')
 require('dotenv').config();
 
 const websiteRoutes = require('./routes/website');
@@ -20,12 +21,16 @@ app.use(
   })
 );
 
+const csrfProtection = csrf()
+
 app.use(flash());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(csrfProtection)
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken()
   next();
 });
 
