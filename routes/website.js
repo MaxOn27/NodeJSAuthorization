@@ -11,9 +11,5 @@ router.get('/about', isAuth, function (req, res) {
   res.render('pages/about');
 });
 
-router.get('/resetPassword', function (req, res) {
-  res.render('pages/resetPassword');
-});
-
 
 module.exports = router;

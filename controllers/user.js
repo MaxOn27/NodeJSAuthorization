@@ -1,14 +1,22 @@
 const bcrypt = require('bcryptjs');
-
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 exports.signUp = async (req, res, next) => {
+  const email = req.body.email;
+  const name = req.body.name;
+  const lastname = req.body.lastname;
   const password = await bcrypt.hash(req.body.password, 12);
-  const isPasswordConfirmed = req.body.password === req.body.confirmPassword;
+  const confirmPassword = req.body.confirmPassword;
+
+  if (!email || !name || !lastname || !password || !confirmPassword) {
+    req.flash('error', 'All the fields must be fulfilled!');
+    return res.redirect('/auth/signup');
+  }
+
   const user = await prisma.user.findFirst({
     where: {
-      email: req.body.email
+      email: email
     }
   });
 
@@ -17,20 +25,20 @@ exports.signUp = async (req, res, next) => {
     return res.redirect('/auth/signup');
   }
 
-  if (isPasswordConfirmed) {
-    await prisma.user.create({
-      data: {
-        email: req.body.email,
-        name: req.body.name,
-        lastname: req.body.lastname,
-        password
-      }
-    });
-    res.redirect('/auth/signin');
-  } else {
+  if (password !== confirmPassword) {
     req.flash('error', 'Passwords not matching');
-    return res.redirect('/auth/login')
+    return res.redirect('/auth/signup')
   }
+
+  await prisma.user.create({
+    data: {
+      email: req.body.email,
+      name: req.body.name,
+      lastname: req.body.lastname,
+      password
+    }
+  });
+  res.redirect('/auth/signin');
 }
 
 exports.signIn = async (req, res, next) => {
@@ -49,7 +57,7 @@ exports.signIn = async (req, res, next) => {
 
   if (!checkPassword) {
     req.flash('error', "Password not matching");
-    res.redirect('/auth/signin')
+    return res.redirect('/auth/signin')
   }
 
   req.session.isLoggedIn = true;
@@ -66,8 +74,3 @@ exports.logout = (req, res, next) => {
     res.redirect('/');
   });
 };
-
-exports.getAllUsers = async (req, res, next) => {
-  await prisma.user.findMany();
-  res.redirect('/');
-}

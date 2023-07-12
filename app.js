@@ -39,4 +39,4 @@ app.use(websiteRoutes);
 app.use(authRoutes);
 
 
-app.listen(3001, () => console.log('Server runs on port ' + process.env.SERVER_PORT));
+app.listen(3000, () => console.log('Server runs on port ' + process.env.SERVER_PORT));
